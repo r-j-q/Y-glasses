@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/statistics",
+    "pages/index/binding",
+    "pages/lanya/blebinding",
+    "pages/signin/signin",
+    "pages/signin/glassesLogin",
+    "pages/index/details",
+    "pages/index/huachu",
+    "pages/signin/jingtui",
+    "pages/index/my",
+    "pages/signin/register",
+    "pages/signin/edit",
+    "pages/signin/activity",
+    "pages/index/activity"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/index/19.png",
+        "selectedIconPath": "static/index/20.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/my",
+        "iconPath": "static/index/21.png",
+        "selectedIconPath": "static/index/22.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于导航路线"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "usingComponents": {}
+}

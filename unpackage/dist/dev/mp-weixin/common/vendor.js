@@ -1464,7 +1464,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2688,9 +2688,9 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.glassesEst = glassesEst;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = "http://bmj.shningmi.com/";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.glassesEst = glassesEst;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var baseUrl = "https://bmj.shningmi.com/";
 // const glaUrl = "https://akeso.com.cn/api/v5/sessions/";
-var glaUrl = "http://akeso.com.cn/api/open/";
+var glaUrl = "https://akeso.com.cn/api/open/";
 function glassesEst(params) {
   var arg = "";
   if (params && params.data) {
@@ -2720,8 +2720,15 @@ function glassesEst(params) {
 function request(params) {
   var arg = "";
   var token = uni.getStorageSync('token');
-  console.log(params.url, "params.url");
-  if (params.url != "authorization" && params.url != "login") {
+  var usinfo;
+  if (params.url == "getUserInfo1") {
+    usinfo = 1;
+    params.url = "getUserInfo";
+  } else if (params.url == "getUserInfo2") {
+    usinfo = 2;
+    params.url = "getUserInfo";
+  }
+  if (params.url != "authorization" && params.url != "login" && params.url != "getActivityLst" && usinfo != "1") {
     if (!token) {
       uni.navigateTo({
         url: "../signin/signin",
@@ -2729,10 +2736,9 @@ function request(params) {
         animationDuration: 300 });
 
       return;
-    } else {
-      params.header.token = token;
     }
   }
+  params.header.token = token;
   if (params && params.data) {
     arg = {
       method: params.method,
@@ -2756,13 +2762,6 @@ function request(params) {
         if (res.data.code == 200) {
           resolve(res);
         }
-        // else if(res.data.code == 209){
-        // 	uni.navigateTo({
-        // 		url:"../signin/signin",
-        // 		animationType: 'pop-in',
-        // 		animationDuration: 300
-        // 	})
-        // }
       } }));
 
   });
@@ -3570,7 +3569,7 @@ if (hadRuntime) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": [{ "path": "pages/index/index", "style": { "navigationBarTitleText": "首页" } }, { "path": "pages/index/statistics", "style": { "navigationBarTitleText": "用眼统计", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/index/binding", "style": { "navigationBarTitleText": "蓝牙连接", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/lanya/blebinding", "style": { "navigationBarTitleText": "蓝牙绑定", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/signin/signin", "style": { "navigationBarTitleText": "登录" } }, { "path": "pages/index/details", "style": { "navigationBarTitleText": "详情", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/index/my", "style": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/signin/edit", "style": { "navigationBarTitleText": "我的信息" } }, { "path": "pages/signin/activity", "style": { "navigationBarTitleText": "我的活动" } }, { "path": "pages/index/activity", "style": { "navigationBarTitleText": "预约试用" } }], "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" }, "tabBar": { "color": "#7A7E83", "selectedColor": "#3cc51f", "borderStyle": "black", "backgroundColor": "#ffffff", "list": [{ "pagePath": "pages/index/index", "iconPath": "static/index/19.png", "selectedIconPath": "static/index/20.png", "text": "首页" }, { "pagePath": "pages/index/my", "iconPath": "static/index/21.png", "selectedIconPath": "static/index/22.png", "text": "个人中心" }] } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": [{ "path": "pages/index/index", "style": { "navigationBarTitleText": "首页" } }, { "path": "pages/lanya/blebinding", "style": { "navigationBarTitleText": "蓝牙绑定", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/index/statistics", "style": { "navigationBarTitleText": "用眼统计", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/index/binding", "style": { "navigationBarTitleText": "蓝牙连接", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/signin/signin", "style": { "navigationBarTitleText": "登录" } }, { "path": "pages/index/details", "style": { "navigationBarTitleText": "详情", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/index/my", "style": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#32529B" } }, { "path": "pages/signin/edit", "style": { "navigationBarTitleText": "我的信息" } }, { "path": "pages/signin/activity", "style": { "navigationBarTitleText": "我的活动" } }, { "path": "pages/index/activity", "style": { "navigationBarTitleText": "预约试用" } }], "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" }, "tabBar": { "color": "#7A7E83", "selectedColor": "#3cc51f", "borderStyle": "black", "backgroundColor": "#ffffff", "list": [{ "pagePath": "pages/index/index", "iconPath": "static/index/19.png", "selectedIconPath": "static/index/20.png", "text": "首页" }, { "pagePath": "pages/index/my", "iconPath": "static/index/21.png", "selectedIconPath": "static/index/22.png", "text": "个人中心" }] } };exports.default = _default;
 
 /***/ }),
 
@@ -18126,7 +18125,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -18147,14 +18146,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -18240,7 +18239,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"glasses","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));

@@ -221,7 +221,7 @@ var _default =
         return;
       }
       if (!/^1[3456789]\d{9}$/.test(this.phone)) {
-        this.$common.showToast("请输入手机号");
+        this.$common.showToast("请输入正确手机号");
         return;
       }
       var data = {

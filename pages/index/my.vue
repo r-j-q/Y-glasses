@@ -16,7 +16,7 @@
 			</view>
 		</view>
 		
-		<view class="list-wrap" @click="jump('1')">
+		<view class="list-wrap" @click="jump('../signin/edit')">
 			<view class="list">
 				<view class="left">
 					<image src="../../static/index/13.png" mode="aspectFill"></image>
@@ -35,6 +35,12 @@
 				<view class="phone" @click="call(user.customer_tel)">{{user.customer_tel}}</view>
 			</view>
 		</view>
+		<view class="pointout-wrap" v-if="!token" @click="navi()">
+			<view class="pointout">
+				<view class="out1">登录后体验全部功能</view>
+				<view class="flex out2">去登陆<view class="arrow"></view></view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -44,6 +50,7 @@
 			return {
 				user:{},
 				customer_tel:"",
+				token:"",
 			}
 		},
 		onLoad() {
@@ -52,31 +59,42 @@
 		onShow() {
 			//获取我的信息
 			this.listItem();
+			this.token = this.$common.getStorages("token");
 		},
 		methods: {
+			navi(){
+				uni.navigateTo({
+					url:"../signin/signin",
+					animationType: 'pop-in',
+					animationDuration: 300
+				})
+			},
 			//获取我的信息
 			listItem(){
 				this.$http.request({
-					url:'getUserInfo',
+					url:'getUserInfo1',
 					method:'GET',
 					header: {
 						'Content-type': 'multipart/form-data',
 					},
 				}).then(res =>{
-					this.user = res.data.data;
+					if(res.data.code == 200){
+						this.user = res.data.data;
+					}else{
+						uni.showToast({
+							title:res.data.info,
+							icon:'none',
+							duration:2000
+						})
+					}
+				
 				})
 			},
 			call(res){
 				this.$common.call(res);
 			},
 			jump(res){
-				if(res == 1){
-					let nickname = this.user.user.nickname;
-					let headimg = this.user.user.headimg;
-					this.$common.navigator('../signin/edit?nickname='+nickname+ '&&headimg=' + headimg);
-				}else{
 					this.$common.navigator(res);
-				}
 			}
 		},
 	}
@@ -91,6 +109,38 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.flex{
+		display: flex;
+	}
+	.arrow {
+		margin: auto 0 auto 10rpx;
+		width: 12rpx;
+		height: 12rpx;
+		border: 1px solid #828282;
+		border-left: none;
+		border-bottom: none;
+		transform: rotate(45deg);
+	}
+	.pointout-wrap{
+		width: 100%;
+		height: 60rpx;
+		border-top-left-radius: 12rpx;
+		border-top-right-radius: 12rpx;
+		background-color: white;
+		border-top: 1rpx solid #f8f9fa;
+		box-shadow: 0 2rpx 40rpx 0 #f8f9fa;
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		line-height: 60rpx;
+		font-size: 26rpx;
+	}
+	.pointout{
+		width: 86%;
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
+	}
 	.header-wrap{
 		width: 100%;
 		height: 312rpx;

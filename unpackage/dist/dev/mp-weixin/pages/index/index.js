@@ -187,28 +187,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       list: [],
       tity: 1,
-      state: false };
+      state: false,
+      token: "" };
 
   },
   onLoad: function onLoad() {
-
+    this.counting();
   },
   onShow: function onShow() {
     this.list = [];
     this.tity = 1;
     this.activityList(this.tity);
+    this.token = this.$common.getStorages("token");
   },
   onReachBottom: function onReachBottom() {
     this.tity++;
     this.activityList(this.tity);
   },
   methods: (_methods = {
+    //缓存里面存入记数
+    counting: function counting() {
+      // Counting
+      uni.setStorageSync('counting', 1);
+    },
+    navi: function navi() {
+      uni.navigateTo({
+        url: "../signin/signin",
+        animationType: 'pop-in',
+        animationDuration: 300 });
+
+    },
     jump: function jump(res) {
       this.$common.navigator(res);
     },
@@ -225,7 +244,6 @@ var _default =
 
         data: data }).
       then(function (res) {
-
         if (res.data.code == 200) {
           var info = res.data.data.data;
           console.log(info, "then-res");
@@ -252,15 +270,12 @@ var _default =
     this.$common.navigator(res);
   }), _defineProperty(_methods, "handleMapLocation", function handleMapLocation()
   {
-    // console.log('点击了开始导航');
-    var latitude = Number(31.172760);
-    var longitude = Number(121.395960);
-    var address = '虹梅路街道';
+    var address = '上海市沪宜公路653号';
     uni.openLocation({
       // 传入你要去的纬度
-      latitude: Number(31.172760),
+      latitude: Number(31.29232),
       // 传入你要去的经度
-      longitude: Number(121.395960),
+      longitude: Number(121.31446),
       // 传入你要去的地址信息 不填则为空
       address: address,
       // 缩放大小

@@ -857,26 +857,6 @@ var uChartsInstance = {};var _default =
 
 
     },
-
-    // asyncData(resData) {
-    // 	var that = this;
-    // 	that.lesid++;
-    // 	const interval = Math.round(new Date().getTime() / 1000).toString();
-    // 	if (that.lesid < 5) {
-    // 		this.$http.glassesEst({
-    // 			url: "uploads",
-    // 			method: "POST",
-    // 			data: {
-    // 				child_id: 35165,
-    // 				records: resData,
-    // 				// device_time: interval,
-    // 				// platform: "webapp",
-    // 			}
-    // 		}).then(res => {
-    // 			console.log(res, "info");
-    // 		})
-    // 	}
-    // },
     //取消
     cancel: function cancel() {
       this.visible = false;
@@ -935,20 +915,6 @@ var uChartsInstance = {};var _default =
       if (time_span == 1) ble = "getReportsDaily"; //getReportsDaily
       if (time_span == 2) ble = "getWeekly";
       if (time_span == 3) ble = "getMonthly";
-      //  bmj.shningmi.com/getReportsDaily
-      // bmj.shningmi.com/getWeekly
-      // bmj.shningmi.com/getMonthly
-      // this.$http.glassesEst({
-      // 	url:ble,
-      // 	method:"GET",
-      // 	header: {
-      // 			'Content-type': 'multipart/form-data',
-      // 		},
-      // 	data: {
-      // 			date: times,
-      // 			child_id: this.children_id,
-      // 		}	
-      // }).then(res =>{
       this.$http.request({
         url: ble,
         method: "GET",
@@ -990,64 +956,6 @@ var uChartsInstance = {};var _default =
 
         }
       });
-      // this.$http.request({
-      // 	url: "getReportsDaily",
-      // 	method: "GET",
-      // 	header: {
-      // 		'Content-type': 'multipart/form-data',
-      // 	},
-      // 	data: {
-      // 		date: times,
-      // 		child_id: this.children_id,
-      // 	}
-      // }).then(res => {
-      // 	console.log(res,"res--669log");
-      // 	if (index == 1) {
-      // 		this.getServerData(res.data.data.bad_posture_data.bad_posture_hour);
-      // 		// this.getServerData(res.data.data.bad_posture_data.bad_posture_times_hour);
-      // 	}
-      // 	if (index == 2) {
-      // 		this.getServerData(res.data.data.nearwork_data.nearwork_hour);
-      // 	}
-      // 	if (index == 3) {
-      // 		this.getServerData(res.data.data.lux_data.lux_hour);
-      // 	}
-      // 	if (index == 4) {
-      // 		this.getServerData(res.data.data.out_time_data.out_time_hour);
-      // 	}
-      // })
-
-
-
-      // uni.request({
-      // 	url:"http://akeso.com.cn/api/open/reports/+'ble'",
-      // 	// monthly"
-      // 	// weekly",
-      // 	// daily",
-      // 	method:"GET",
-      // 	header: {
-      // 				'Content-type': 'multipart/form-data',
-      // 	},
-      // 	data: {
-      // 		date: times,
-      // 		child_id: this.children_id,
-      // 	},
-      // 	success:(res)=>{
-      // 		console.log(res,"res--GETgeTget");
-      // 			if (index == 1) {
-      // 				this.getServerData(res.data.data.bad_posture_data.bad_posture_hour);
-      // 			}
-      // 			if (index == 2) {
-      // 				this.getServerData(res.data.data.nearwork_data.nearwork_hour);
-      // 			}
-      // 			if (index == 3) {
-      // 				this.getServerData(res.data.data.lux_data.lux_hour);
-      // 			}
-      // 			if (index == 4) {
-      // 				this.getServerData(res.data.data.out_time_data.out_time_hour);
-      // 			}
-      // 	}		
-      // })
     },
     //儿童姓名
     mit: function mit() {

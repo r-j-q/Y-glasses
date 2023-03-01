@@ -7,6 +7,13 @@
 			}
 		},
 		{
+			"path": "pages/lanya/blebinding",
+			"style": {
+				"navigationBarTitleText": "蓝牙绑定",
+				"navigationBarBackgroundColor":"#32529B"
+			}
+		},
+		{
 			"path": "pages/index/statistics",
 			"style": {
 				"navigationBarTitleText": "用眼统计",
@@ -17,13 +24,6 @@
 			"path": "pages/index/binding",
 			"style": {
 				"navigationBarTitleText": "蓝牙连接",
-				"navigationBarBackgroundColor":"#32529B"
-			}
-		},
-		{
-			"path": "pages/lanya/blebinding",
-			"style": {
-				"navigationBarTitleText": "蓝牙绑定",
 				"navigationBarBackgroundColor":"#32529B"
 			}
 		},

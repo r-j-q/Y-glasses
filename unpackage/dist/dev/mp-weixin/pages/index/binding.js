@@ -290,8 +290,9 @@ var _default =
       user_phone: "",
       record: 1,
       debounce: true, //节流
-      interval: "" //计时器
-    };
+      interval: "", //计时器
+      jsq: 1 };
+
   },
   onReady: function onReady() {
   },
@@ -308,11 +309,14 @@ var _default =
     clearInterval(this.interval);
   },
   methods: {
+    climask: function climask() {
+      this.lyswitch = false;
+    },
     obtain: function obtain() {
       this.record = 1;
       var mac = uni.getStorageSync('mac_address');
       this.deviceId = mac;
-      this.user_phone = this.$common.getStorages("user_phone");
+      this.user_phone = uni.getStorageSync("user_phone");
       var App = getApp();
       this.stateid = App.globalData.stateid;
     },
@@ -324,6 +328,7 @@ var _default =
         this.lyswitch = true;
       } else {
         var that = this;
+        console.log(that.debounce, "未进入if判断");
         if (that.debounce) {
           that.record = 1;
           that.debounce = false;
@@ -346,7 +351,7 @@ var _default =
           that.record = 1;
           uni.stopBluetoothDevicesDiscovery({
             success: function success(res) {
-              console.log('连接蓝牙成功之后关闭蓝牙搜索');
+              console.log('连接失败');
             } });
 
           uni.showToast({
@@ -355,11 +360,22 @@ var _default =
             duration: 5000 });
 
           that.debounce = true;
+          var con = uni.getStorageSync('counting');
+          console.log("外部con", con);
+          if (con >= 2) {
+            uni.removeStorageSync("mac_address");
+            uni.removeStorageSync("user_phone");
+            that.user_phone = "";
+            that.mac_address = "";
+            uni.setStorageSync('counting', 1);
+          } else {
+            var unt = con + 1;
+            console.log(unt, "unt--->counting");
+            uni.setStorageSync('counting', unt);
+          }
         }
-        console.log(that.record, "that.record==true------w");
       }, 1000);
       that.interval = interval;
-      console.log(interval, "interval---===---");
 
     },
     mitlog: function mitlog() {var _this = this;

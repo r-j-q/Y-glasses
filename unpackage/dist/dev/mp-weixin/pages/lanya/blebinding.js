@@ -175,7 +175,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   data: function data() {
@@ -225,7 +224,7 @@ var _default =
         this.$common.showToast("请输入姓名");
         return;
       }
-      if (!this.date) {
+      if (!this.date || isNaN(Date.parse(this.date)) != false) {
         this.$common.showToast("请选择儿童生日");
         return;
       }
@@ -328,12 +327,6 @@ var _default =
       });
     },
 
-    // /users/update birthday
-
-
-
-
-
     //儿童姓名
     mit: function mit() {
       if (!this.children_name) {
@@ -351,13 +344,10 @@ var _default =
       this.lyswitch = true;
       this.ipment = info.name;
       this.mac_address = info.deviceId;
-      // uni.setStorage({
-      // 	key: 'mac_address',
-      // 	data: this.mac_address
-      // });
     },
     bindDateChange: function bindDateChange(e) {
       var str = e.detail.value;
+      console.log(str, "bindDateChange-str");
       this.date = str;
     },
     //开始搜索

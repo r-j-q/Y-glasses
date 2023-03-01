@@ -122,21 +122,6 @@
 				} else {
 					this.$common.showToast("您拒绝了请求,不能正常使用小程序")
 				}
-				// var data = {
-				// 	code:e.code,
-				// 	encryptedData:e.encryptedData,
-				// 	iv:e.iv,
-				// }
-				// this.$http.request({
-				// 		url:'login',
-				// 		method:'POST',
-				// 		header: {
-				// 			'Content-Type':'applicktion/json',
-				// 		},
-				// 		data:data,
-				// 	}).then(res =>{
-				// 		console.log(res,"sigin-login-res");
-				// 	})
 			},
 
 

@@ -7,10 +7,10 @@
 		</view>
 		<view class="address-wrap">
 			<view class="address flex justify items">
-				<view class="left">上海市长宁区虹梅路3999号</view>
+				<view class="left">上海市沪宜公路653号</view>
 				<view class="right">
 					<image src="../../static/index/3.png" mode="aspectFill" class="first" @click="handleMapLocation()"></image>
-					<image src="../../static/index/4.png" mode="aspectFill" @click="call('400-820-8901')"></image>
+					<image src="../../static/index/4.png" mode="aspectFill" @click="call('15002113568')"></image>
 				</view>
 			</view>
 		</view>
@@ -40,31 +40,50 @@
 			</view>
 			<view class="bottom" v-if="state">没有更多内容了~</view>
 		</view>
+		<view class="pointout-wrap" v-if="!token" @click="navi()">
+			<view class="pointout">
+				<view class="out1">登录后体验全部功能</view>
+				<view class="flex out2">去登陆<view class="arrow"></view></view>
+			</view>
+		</view>
 	</view>
 </template>
-
 <script>
 	export default {
 		data() {
 			return {
 				list:[],
 				tity:1,
-				state:false
+				state:false,
+				token:"",
 			}
 		},
 		onLoad() {
-			
+			this.counting();
 		},
 		onShow() {
 			this.list = [];
 			this.tity = 1;
 			this.activityList(this.tity);
+			this.token = this.$common.getStorages("token");
 		},
 		onReachBottom() {
 			this.tity++;
 			this.activityList(this.tity);
 		},
 		methods: {
+			//缓存里面存入记数
+			counting(){
+				// Counting
+				uni.setStorageSync('counting',1);
+			},
+			navi(){
+				uni.navigateTo({
+					url:"../signin/signin",
+					animationType: 'pop-in',
+					animationDuration: 300
+				})
+			},
 			jump(res){
 				this.$common.navigator(res);
 			},
@@ -81,7 +100,6 @@
 					},
 					data:data,
 				}).then(res =>{
-					
 					if(res.data.code == 200){
 						var info = res.data.data.data;
 						console.log(info,"then-res");
@@ -108,15 +126,12 @@
 				this.$common.navigator(res);
 			},
 			handleMapLocation() {
-				// console.log('点击了开始导航');
-				let latitude = Number(31.172760);
-				let longitude = Number(121.395960);
-				let address = '虹梅路街道';
+				let address = '上海市沪宜公路653号';
 							uni.openLocation({
 								// 传入你要去的纬度
-								latitude: Number(31.172760),
+								latitude: Number(31.29232),
 								// 传入你要去的经度
-								longitude: Number(121.395960),
+								longitude: Number(121.31446),
 								// 传入你要去的地址信息 不填则为空
 								address: address,
 								// 缩放大小
@@ -139,6 +154,35 @@
 		margin: 0;
 		padding: 0;
 		background-color: #f7f7f7;
+	}
+	.arrow {
+		margin: auto 0 auto 10rpx;
+		width: 12rpx;
+		height: 12rpx;
+		border: 1px solid #828282;
+		border-left: none;
+		border-bottom: none;
+		transform: rotate(45deg);
+	}
+	.pointout-wrap{
+		width: 100%;
+		height: 60rpx;
+		border-top-left-radius: 12rpx;
+		border-top-right-radius: 12rpx;
+		background-color: white;
+		border-top: 1rpx solid #f8f9fa;
+		box-shadow: 0 2rpx 40rpx 0 #f8f9fa;
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		line-height: 60rpx;
+		font-size: 26rpx;
+	}
+	.pointout{
+		width: 86%;
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
 	}
 </style>
 <style lang="scss" scoped>

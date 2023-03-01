@@ -1,16 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/lanya/blebinding",
     "pages/index/statistics",
     "pages/index/binding",
-    "pages/lanya/blebinding",
     "pages/signin/signin",
-    "pages/signin/glassesLogin",
     "pages/index/details",
-    "pages/index/huachu",
-    "pages/signin/jingtui",
     "pages/index/my",
-    "pages/signin/register",
     "pages/signin/edit",
     "pages/signin/activity",
     "pages/index/activity"

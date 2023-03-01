@@ -1,1 +1,0 @@
-<view><view></view><input type="text" placeholder="请输入儿童姓名" data-event-opts="{{[['input',[['__set_model',['','children_name','$event',[]]]]]]}}" value="{{children_name}}" bindinput="__e"/><button data-event-opts="{{[['tap',[['addChildren']]]]}}" bindtap="__e">确定</button><button data-event-opts="{{[['tap',[['userChildren']]]]}}" bindtap="__e">查询</button></view>

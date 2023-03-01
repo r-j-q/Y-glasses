@@ -172,12 +172,33 @@ var _default =
   },
   onLoad: function onLoad(option) {
     this.token = this.$common.getStorages("token");
-    this.nicknames = option.nickname;
-    this.avatar = option.headimg;
+    this.listItem();
+
   },
   onShow: function onShow() {
   },
   methods: {
+    listItem: function listItem() {var _this = this;
+      this.$http.request({
+        url: 'getUserInfo2',
+        method: 'GET',
+        header: {
+          'Content-type': 'multipart/form-data' } }).
+
+      then(function (res) {
+        console.log(res, "resoption");
+        if (res.data.code == 200) {
+          _this.nicknames = res.data.data.user.nickname;
+          _this.avatar = res.data.data.user.headimg;
+        } else {
+          uni.showToast({
+            title: res.data.info,
+            icon: "none" });
+
+        }
+      });
+    },
+
     changeAvatar: function changeAvatar(e) {
       console.log(e, "changeAvatar---changeAvatar");
       var that = this;
@@ -206,7 +227,7 @@ var _default =
 
       }
     },
-    jump: function jump() {var _this = this;
+    jump: function jump() {var _this2 = this;
       var username;
       var userphoto;
       if (!this.avatar) {
@@ -229,7 +250,7 @@ var _default =
 
         data: data }).
       then(function (res) {
-        var that = _this;
+        var that = _this2;
         that.$common.showToast(res.data.info);
         if (res.data.code == 200) {
           setTimeout(function () {
@@ -239,35 +260,7 @@ var _default =
           }, 2000);
         }
       });
-    }
-    // upload(tion){
-    // 	var that = this;
-    // 	uni.chooseMedia({
-    // 	  count: 1,
-    // 	  mediaType: ['image'],
-    // 	  sourceType: ['album', 'camera'],
-    // 	  camera: 'back',
-    // 	  success(res) {
-    // 		  console.log(res,"res-res");
-    // 		  var tempImg = res.tempFiles[0].tempFilePath;
-    // 		  uni.uploadFile({
-    // 		  	url:'http://bmj.shningmi.com/uploads',
-    // 		  	filePath: tempImg,
-    // 		  	name: 'file',
-    // 			header:{
-    // 				'Content-Type':'multipart/form-data'
-    // 			},
-    // 		  	success: (uploadFileRes) => {
-    // 				console.log(uploadFileRes,"success-res");
-    // 		  		var data = JSON.parse(uploadFileRes.data);
-    // 				that.photo = data.data.url
-    // 		  	}
-    // 		  });
-    // 	  }
-    // 	})
-
-    // },
-  } };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

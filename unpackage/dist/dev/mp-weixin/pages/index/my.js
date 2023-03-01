@@ -134,7 +134,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -179,7 +185,8 @@ var _default =
   data: function data() {
     return {
       user: {},
-      customer_tel: "" };
+      customer_tel: "",
+      token: "" };
 
   },
   onLoad: function onLoad() {
@@ -188,32 +195,44 @@ var _default =
   onShow: function onShow() {
     //获取我的信息
     this.listItem();
+    this.token = this.$common.getStorages("token");
   },
   methods: {
+    navi: function navi() {
+      uni.navigateTo({
+        url: "../signin/signin",
+        animationType: 'pop-in',
+        animationDuration: 300 });
+
+    },
     //获取我的信息
     listItem: function listItem() {var _this = this;
       this.$http.request({
-        url: 'getUserInfo',
+        url: 'getUserInfo1',
         method: 'GET',
         header: {
           'Content-type': 'multipart/form-data' } }).
 
       then(function (res) {
-        _this.user = res.data.data;
+        if (res.data.code == 200) {
+          _this.user = res.data.data;
+        } else {
+          uni.showToast({
+            title: res.data.info,
+            icon: 'none',
+            duration: 2000 });
+
+        }
+
       });
     },
     call: function call(res) {
       this.$common.call(res);
     },
     jump: function jump(res) {
-      if (res == 1) {
-        var nickname = this.user.user.nickname;
-        var headimg = this.user.user.headimg;
-        this.$common.navigator('../signin/edit?nickname=' + nickname + '&&headimg=' + headimg);
-      } else {
-        this.$common.navigator(res);
-      }
+      this.$common.navigator(res);
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

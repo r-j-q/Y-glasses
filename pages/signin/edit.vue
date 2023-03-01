@@ -38,12 +38,33 @@
 		},
 		onLoad(option) {
 			this.token = this.$common.getStorages("token");
-			this.nicknames = option.nickname;
-			this.avatar = option.headimg;
+			this.listItem()
+			
 		},
 		onShow() {
 		},
 		methods:{
+			listItem(){
+				this.$http.request({
+					url:'getUserInfo2',
+					method:'GET',
+					header: {
+						'Content-type': 'multipart/form-data',
+					},
+				}).then(res =>{
+					console.log(res,"resoption")
+					if(res.data.code == 200){
+						this.nicknames = res.data.data.user.nickname;
+						this.avatar = res.data.data.user.headimg;
+					}else{
+						uni.showToast({
+							title:res.data.info,
+							icon:"none"
+						})
+					}
+				})
+			},
+			
 			changeAvatar(e) {
 				console.log(e,"changeAvatar---changeAvatar");
 				var that = this;
@@ -106,33 +127,6 @@
 						}
 					})
 			},
-			// upload(tion){
-			// 	var that = this;
-			// 	uni.chooseMedia({
-			// 	  count: 1,
-			// 	  mediaType: ['image'],
-			// 	  sourceType: ['album', 'camera'],
-			// 	  camera: 'back',
-			// 	  success(res) {
-			// 		  console.log(res,"res-res");
-			// 		  var tempImg = res.tempFiles[0].tempFilePath;
-			// 		  uni.uploadFile({
-			// 		  	url:'http://bmj.shningmi.com/uploads',
-			// 		  	filePath: tempImg,
-			// 		  	name: 'file',
-			// 			header:{
-			// 				'Content-Type':'multipart/form-data'
-			// 			},
-			// 		  	success: (uploadFileRes) => {
-			// 				console.log(uploadFileRes,"success-res");
-			// 		  		var data = JSON.parse(uploadFileRes.data);
-			// 				that.photo = data.data.url
-			// 		  	}
-			// 		  });
-			// 	  }
-			// 	})
-			
-			// },
 		}
 	}
 </script>

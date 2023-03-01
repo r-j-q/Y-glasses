@@ -23,7 +23,6 @@
 					<view class="tion1">儿童生日</view>
 					<picker mode="date" :value="date" @change="bindDateChange" fields="day">
 						<view class="uni-input tion3"	>
-						<!-- style="margin-left: 20rpx;width: 90%;text-align: left;height: 60rpx;line-height: 60rpx;color: color: #BBBBBB;;" -->
 							{{date}}
 						</view>
 					</picker>
@@ -91,7 +90,7 @@
 					this.$common.showToast("请输入姓名");
 					return;
 				}
-				if(!this.date){
+				if(!this.date || isNaN(Date.parse(this.date)) != false){
 					this.$common.showToast("请选择儿童生日");
 					return;
 				}
@@ -194,12 +193,6 @@
 				})
 			},
 			
-			// /users/update birthday
-			
-			
-			
-			
-			
 			//儿童姓名
 			mit() {
 				if (!this.children_name) {
@@ -217,13 +210,10 @@
 				this.lyswitch = true;
 				this.ipment = info.name; 
 				this.mac_address = info.deviceId;
-				// uni.setStorage({
-				// 	key: 'mac_address',
-				// 	data: this.mac_address
-				// });
 			},
 			bindDateChange:function(e) {
 				let str = e.detail.value;
+				console.log(str,"bindDateChange-str");
 				this.date = str;
 			},
 			//开始搜索

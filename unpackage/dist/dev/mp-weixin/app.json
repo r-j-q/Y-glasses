@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/lanya/blebinding",
     "pages/index/statistics",
     "pages/index/binding",
-    "pages/lanya/blebinding",
     "pages/signin/signin",
     "pages/index/details",
     "pages/index/my",

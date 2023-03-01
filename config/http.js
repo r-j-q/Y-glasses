@@ -1,6 +1,6 @@
-const baseUrl= "http://bmj.shningmi.com/";
+const baseUrl= "https://bmj.shningmi.com/";
 // const glaUrl = "https://akeso.com.cn/api/v5/sessions/";
-const glaUrl = "http://akeso.com.cn/api/open/";
+const glaUrl = "https://akeso.com.cn/api/open/";
 function glassesEst(params){
 	var arg = "";
 		if (params && params.data) {
@@ -30,8 +30,15 @@ function glassesEst(params){
 function request(params){
 	var arg = "";
 	var token = uni.getStorageSync('token');
-	console.log(params.url,"params.url");
-	if(params.url != "authorization" && params.url != "login"){	
+	var usinfo;
+	if(params.url == "getUserInfo1"){
+		usinfo = 1;
+		params.url = "getUserInfo"
+	}else if(params.url == "getUserInfo2"){
+		usinfo = 2;
+		params.url = "getUserInfo"
+	}
+	if(params.url != "authorization" && params.url != "login" && params.url != "getActivityLst" && usinfo != "1"){	
 		if(!token){
 			uni.navigateTo({
 				url:"../signin/signin",
@@ -39,10 +46,9 @@ function request(params){
 				animationDuration: 300
 			})
 			return;
-		}else{
-			params.header.token = token;
 		}
 	}
+	params.header.token = token;
 	if (params && params.data) {
 		arg = {
 			method: params.method,
@@ -66,13 +72,6 @@ function request(params){
 				if(res.data.code == 200){
 					resolve(res);
 				}
-				// else if(res.data.code == 209){
-				// 	uni.navigateTo({
-				// 		url:"../signin/signin",
-				// 		animationType: 'pop-in',
-				// 		animationDuration: 300
-				// 	})
-				// }
 			}
 		})
 	})

@@ -488,6 +488,7 @@ var _default = {
         }
       }).then(function (res) {
         if (res.data.status == 200) {
+          console.log('=已绑定过列表========>', res.data);
           var len = res.data.data.children.length - 1;
           if (res.data.data.children[len].mac_address) {
             _this.$common.setStorage("user_phone", _this.user_phone);

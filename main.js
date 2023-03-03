@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-
+import uView from '@/uview-ui'
+Vue.use(uView)
 Vue.config.productionTip = false
 import * as http from './config/http.js';
 import * as common from './config/common.js';

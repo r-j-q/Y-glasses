@@ -35,13 +35,7 @@ setTimeout(function () {
 						// 	}
 
 						// },
-						// position: function (pos, params, el, elRect, size) {
-						//   const obj = {
-						//     top: 10
-						//   };
-						//   obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
-						//   return obj;
-						// },
+					 
 						extraCssText: 'width: 160px'
 					},
     dataset: {
@@ -54,7 +48,15 @@ setTimeout(function () {
       ]
     },
     xAxis: { type: 'category' },
-    yAxis: { gridIndex: 0 },
+    yAxis: { gridIndex: 0, 
+    axisLabel:{
+      formatter (value) {
+        
+           return  value +"°C";
+           }
+      
+    }, },
+     
     grid: { top: '55%' },
     series: [
       {

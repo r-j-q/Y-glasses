@@ -9,7 +9,9 @@
     "pages/index/my",
     "pages/signin/edit",
     "pages/signin/activity",
-    "pages/index/activity"
+    "pages/index/activity",
+    "uni_modules/uni-pay/pages/success/success",
+    "uni_modules/uni-pay/pages/ad-interactive-webview/ad-interactive-webview"
   ],
   "subPackages": [],
   "window": {

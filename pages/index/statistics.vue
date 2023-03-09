@@ -67,7 +67,7 @@
 
 		<view class="chart">
 			<view class="chart-wrap">
-				<view class="chart-wrap-list" :class="item.id==count?'actives':''" @click="tion(item.id)"
+				<view class="chart-wrap-list"    :class="item.id==count?'actives':''" @click="cate(item.id)"
 					v-for="(item,index) in listYong" :key="index"> {{item.name}}</view>
 
 
@@ -87,7 +87,7 @@
 					:style="{'background':(aswitch == 4 ? '#32529B':'#ffffff'),'color':(aswitch != 4 ? '#32529B':'#ffffff')}">
 					户外时间</view> -->
 			</view>
-			<view class="classlist flex">
+		<!-- 	<view class="classlist flex">
 				<view @click="cate(1)"
 					:style="{'background':(classcate == 1 ? '#FFB58D':'#ffffff'),'color':(classcate != 1 ? '#000':'#ffffff')}">
 					日数据</view>
@@ -97,8 +97,8 @@
 				<view @click="cate(3)"
 					:style="{'background':(classcate == 3 ? '#FFB58D':'#ffffff'),'color':(classcate != 3 ? '#000':'#ffffff')}">
 					月数据</view>
-			</view>
-			<view class="guide-wrap">
+			</view> -->
+			<!-- <view class="guide-wrap">
 				<view class="inside">
 					<view style="color: #aef0c2;width: 160rpx;">{{eyearr[0]}}%</view>
 					<view class="circular-top flex">
@@ -131,14 +131,15 @@
 					</view>
 					<view style="color: #FF4747;width: 160rpx;margin-top: 146rpx;">{{eyearr[3]}}%</view>
 				</view>
-			</view>
-			<view class="charts-min">{{yCompany}}</view>
-			<view class="charts-box">
-				<qiun-data-charts :style="visible?'display:none':''" type="column" :opts="opts" :chartData="chartData"
-					:ontouch="true" />
-			</view>
-			<view class="charts-min" style="width: 98%;text-align: right;margin: 10rpx auto 100rpx auto;">时间/{{company}}
-			</view>
+			</view> -->
+			<!-- <view class="charts-min">{{yCompany}}</view> -->
+			<!-- <view class="charts-box"> -->
+			<!-- 	<qiun-data-charts :style="visible?'display:none':''" type="column" :opts="opts" :chartData="chartData"
+					:ontouch="true" /> -->
+					<category-line  :count="count" :children_id="children_id"/>
+			<!-- </view> -->
+		<!-- 	<view class="charts-min" style="width: 98%;text-align: right;margin: 10rpx auto 100rpx auto;">时间/{{company}}
+			</view> -->
 
 		</view>
 		<!-- <view @click="create1()">数据上传</view> -->
@@ -147,28 +148,46 @@
 </template>
 
 <script>
+	import CategoryLine from "@/components/categoryLine/index"
 	var uChartsInstance = {};
 	export default {
+		components:{CategoryLine},
 		data() {
 			return {
+				  
+				  
 				count: 1,
 				listYong: [{
-						name: "错误坐姿",
+						name: "日数据",
 						id: 1
 					},
 					{
-						name: "近距离用眼",
+						name: "周数据",
 						id: 2
 					},
 					{
-						name: "光照强弱",
+						name: "月数据",
 						id: 3
-					},
-					{
-						name: "户外时间",
-						id: 4
-					},
+					} 
 				],
+				 
+				// listYong: [{
+				// 		name: "错误坐姿",
+				// 		id: 1
+				// 	},
+				// 	{
+				// 		name: "近距离用眼",
+				// 		id: 2
+				// 	},
+				// 	{
+				// 		name: "光照强弱",
+				// 		id: 3
+				// 	},
+				// 	{
+				// 		name: "户外时间",
+				// 		id: 4
+				// 	},
+				// ],
 				eyearr: [],
 				yCompany: "分钟", //y轴单位 
 				company: "小时", //x轴单位
@@ -248,32 +267,41 @@
 			};
 		},
 		onLoad() {
-
+			let _this =this;
+			// _this.handleTimeData(1)
+            setInterval(()=>{
+				_this.notifyMy()
+			},300000)
 		},
 		onShow() {
-			uni.getSystemInfo({
-				success: res => {
-					this.width = res.screenWidth * 0.8
-				}
-			})
-			// this.children_id = this.$common.getStorages("children_id");
+			// uni.getSystemInfo({
+			// 	success: res => {
+			// 		this.width = res.screenWidth * 0.8
+			// 	}
+			// })
 			this.user_phone(); //获取缓存里用户手机号
-			// this.datetimes();
+		 
 			this.testing(); // 蓝牙是否异常断开
-			// this.statusCheck();
+		 
 		},
 		onReady() {},
 		methods: {
 			cate(res) {
+				this.count = res;
 				this.classcate = res;
 				if (res == 1) {
 					this.company = "小时";
 				} else {
 					this.company = "天";
 				}
+				   
+				// 时间选择  
+			 
+				
 				//选择的时间   数据类型   时间跨度
-				this.obtainData(this.choicetime, this.aswitch, res);
+				// this.obtainData(this.choicetime, this.aswitch, res);
 			},
+		 
 			//获取缓存手机号
 			user_phone() {
 				var phone = uni.getStorageSync("user_phone");
@@ -788,6 +816,7 @@
 				if (time_span == 1) ble = "getReportsDaily"; //getReportsDaily
 				if (time_span == 2) ble = "getWeekly";
 				if (time_span == 3) ble = "getMonthly";
+				console.log('=====bleble====>',ble)
 				this.$http.request({
 					url: ble,
 					method: "GET",
@@ -1380,8 +1409,8 @@
 	}
 
 	.chart-wrap {
-		width: 100%;
-		margin: 0 auto;
+		width: 60%;
+		margin: 40upx auto;
 		border-radius: 100upx;
 		background-color: #f5f5f5;
 		display: flex;
@@ -1462,12 +1491,12 @@
 	}
 
 	.chart {
-		width: 710rpx;
+		width: 750rpx;
 		height: auto;
 		margin: 0 auto;
 		background-color: #FFFFFF;
 		overflow: hidden;
-		padding: 20upx;
+		// padding: 20upx;
 	}
 
 	.bottom-frame {

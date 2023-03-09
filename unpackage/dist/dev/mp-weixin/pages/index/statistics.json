@@ -3,6 +3,6 @@
   "navigationBarBackgroundColor": "#32529B",
   "usingComponents": {
     "u-button": "/uview-ui/components/u-button/u-button",
-    "qiun-data-charts": "/uni_modules/qiun-data-charts/components/qiun-data-charts/qiun-data-charts"
+    "category-line": "/components/categoryLine/index"
   }
 }

@@ -1,6 +1,12 @@
 
-.name-style{font-size: 28rpx;}
-.name-style-text{font-size: 28rpx;font-weight: 600;margin-left: 10rpx;}
+.name-style {
+	font-size: 28rpx;
+}
+.name-style-text {
+	font-size: 28rpx;
+	font-weight: 600;
+	margin-left: 10rpx;
+}
 .en-wrap {
 	width: 420rpx;
 	height: 80rpx;
@@ -477,8 +483,8 @@ view[class^="quarter"].data-v-ba7e820e {
           transform: rotate(45deg);
 }
 .chart-wrap.data-v-ba7e820e {
-  width: 100%;
-  margin: 0 auto;
+  width: 60%;
+  margin: 40rpx auto;
   border-radius: 100rpx;
   background-color: #f5f5f5;
   display: flex;
@@ -508,12 +514,11 @@ view[class^="quarter"].data-v-ba7e820e {
   color: #32529B;
 }
 .chart.data-v-ba7e820e {
-  width: 710rpx;
+  width: 750rpx;
   height: auto;
   margin: 0 auto;
   background-color: #FFFFFF;
   overflow: hidden;
-  padding: 20rpx;
 }
 .bottom-frame.data-v-ba7e820e {
   width: 100%;

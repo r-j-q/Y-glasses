@@ -90,8 +90,9 @@ setTimeout(function () {
       {
         type: 'pie',
         id: 'pie',
+        // 修改饼图大小
         radius: '30%',
-        center: ['50%', '25%'],
+        center: ['50%', '35%'],
         emphasis: {
           focus: 'self'
         },

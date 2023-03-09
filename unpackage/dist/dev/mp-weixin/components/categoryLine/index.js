@@ -358,13 +358,13 @@ var _default = {
           },
           label: {
             // formatter: '{b}: {@2012} ({d}%)'
-            formatter: '{b}: {@2023} '
-          },
-          encode: {
-            itemName: 'product',
-            value: '2023',
-            tooltip: '2023'
+            formatter: '{b}: {@source[0][2]}({d}%)'
           }
+          // encode: {
+          // 	itemName: 'product',
+          // 	value: '2023',
+          // 	tooltip: '2023'
+          // }
         }]
       };
     }

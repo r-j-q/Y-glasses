@@ -107,13 +107,13 @@
 					}
 					if (_this.count == 2) {
 						res.data.data.bad_posture_times_array.unshift('错误坐姿'),
-							res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
+							res.data.data.nearwork_day_array.unshift('近距离用眼'),
 							res.data.data.lux_day_array.unshift('光照强弱'),
 							res.data.data.out_time_array.unshift('户外时间')
 						source = [
 							_this.x_week_list,
 							[...res.data.data.bad_posture_times_array],
-							[...res.data.data.nearwork_burden_day_array],
+							[...res.data.data.nearwork_day_array],
 							[...res.data.data.lux_day_array],
 							[...res.data.data.out_time_array]
 						]
@@ -122,13 +122,13 @@
 					if (_this.count == 3) {
 						res.data.data.time_array.unshift('product'),
 							res.data.data.bad_posture_times_array.unshift('错误坐姿'),
-							res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
+							res.data.data.nearwork_day_array.unshift('近距离用眼'),
 							res.data.data.lux_day_array.unshift('光照强弱'),
 							res.data.data.out_time_lux_array.unshift('户外时间')
 						source = [
 							[...res.data.data.time_array],
 							[...res.data.data.bad_posture_times_array],
-							[...res.data.data.nearwork_burden_day_array],
+							[...res.data.data.nearwork_day_array],
 							[...res.data.data.lux_day_array],
 							[...res.data.data.out_time_lux_array]
 						]

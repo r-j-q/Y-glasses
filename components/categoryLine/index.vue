@@ -12,10 +12,10 @@
 
 <script>
 	// import echarts from '@/components/secharts/echarts/echarts.vue'
-import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
+	import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 	export default {
 		name: "categoryLine",
-		props: ['count','children_id'],
+		props: ['count', 'children_id'],
 
 		components: {
 			echarts
@@ -47,8 +47,10 @@ import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 
 		mounted() {
 			let _this = this;
-			setTimeout(()=>{_this.handleTimeData()},1000)
-			 
+			setTimeout(() => {
+				_this.handleTimeData()
+			}, 1000)
+
 			// setInterval(()=>{
 			// 	_this.handleTimeData()
 			// },300000)
@@ -91,24 +93,23 @@ import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 					// 	]
 					let source = []
 					if (_this.count == 1) {
-				          res.data.data.bad_posture_data.bad_posture_times_hour.unshift('错误坐姿');
-						  res.data.data.nearwork_data.nearwork_hour.unshift('近距离用眼');
-						  res.data.data.lux_data.lux_hour.unshift('光照强弱');
-						  res.data.data.out_time_data.out_time_hour.unshift('户外时间');
+						res.data.data.bad_posture_data.bad_posture_times_hour.unshift('错误坐姿');
+						res.data.data.nearwork_data.nearwork_hour.unshift('近距离用眼');
+						res.data.data.lux_data.lux_hour.unshift('光照强弱');
+						res.data.data.out_time_data.out_time_hour.unshift('户外时间');
 						source = [
 							_this.x_day_list,
 							[...res.data.data.bad_posture_data.bad_posture_times_hour],
 							[...res.data.data.nearwork_data.nearwork_hour],
 							[...res.data.data.lux_data.lux_hour],
-							[...res.data.data.out_time_data.out_time_hour] 
+							[...res.data.data.out_time_data.out_time_hour]
 						]
-						// console.log('=2222========>', res.data.data.bad_posture_data.bad_posture_times_hour)
 					}
 					if (_this.count == 2) {
 						res.data.data.bad_posture_times_array.unshift('错误坐姿'),
-						res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
-						res.data.data.lux_day_array.unshift('光照强弱'),
-						res.data.data.out_time_array.unshift('户外时间')
+							res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
+							res.data.data.lux_day_array.unshift('光照强弱'),
+							res.data.data.out_time_array.unshift('户外时间')
 						source = [
 							_this.x_week_list,
 							[...res.data.data.bad_posture_times_array],
@@ -120,10 +121,10 @@ import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 
 					if (_this.count == 3) {
 						res.data.data.time_array.unshift('product'),
-						res.data.data.bad_posture_times_array.unshift('错误坐姿'),
-						res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
-						res.data.data.lux_day_array.unshift('光照强弱'),
-						res.data.data.out_time_lux_array.unshift('户外时间')
+							res.data.data.bad_posture_times_array.unshift('错误坐姿'),
+							res.data.data.nearwork_burden_day_array.unshift('近距离用眼'),
+							res.data.data.lux_day_array.unshift('光照强弱'),
+							res.data.data.out_time_lux_array.unshift('户外时间')
 						source = [
 							[...res.data.data.time_array],
 							[...res.data.data.bad_posture_times_array],
@@ -236,7 +237,7 @@ import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 							},
 							formatter(value) {
 								// return value + "°C";
-								return value ;
+								return value;
 							}
 
 						},
@@ -281,28 +282,30 @@ import echarts from "@/components/echarts-uniapp/echarts-uniapp.vue"
 								focus: 'series'
 							}
 						},
-						{
-							type: 'pie',
-							id: 'pie',
-							// 修改饼图大小
-							radius: '30%',
-							center: ['50%', '15%'],
-							emphasis: {
-								focus: 'self'
-							},
-							label: {
-								// formatter: '{b}: {@2012} ({d}%)'
-								formatter: '{b}: {@source[0][2]}({d}%)'
-							}
-							// encode: {
-							// 	itemName: 'product',
-							// 	value: '2023',
-							// 	tooltip: '2023'
-							// }
-						}
+						// {
+						// 	type: 'pie',
+						// 	id: 'pie',
+						// 	// 修改饼图大小
+						// 	radius: '23%',
+						// 	center: ['50%', '18%'],
+						// 	emphasis: {
+						// 		focus: 'self'
+						// 	},
+						// 	label: {
+						// 		// formatter: '{b}: {@2012} ({d}%)'
+						// 		formatter: '{b}: ({d}%)'
+						// 	},
+						// 	encode: {
+						// 		itemName: 'product',
+						// 		value:source[0][1],
+						// 		tooltip: source[0][1]
+						// 	}
+						// }
 					]
 				}
 
+            
+             
 
 			}
 		}

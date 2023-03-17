@@ -10,7 +10,6 @@
 
 </template>
 <script>
-	
 	/**
 	 * echartsForUniApp echart兼容uni-app
 	 * @description echart兼容uni-app
@@ -19,8 +18,8 @@
 	 * @example <echarts ref="echarts" :option="option" canvasId="echarts"></echarts>
 	 */
 	import WxCanvas from './wx-canvas.js';
-	import * as echarts from './echarts.min.js';	
-	
+	import * as echarts from './echarts.min.js';
+
 	var chartList = {}
 	export default {
 		props: {
@@ -38,17 +37,19 @@
 		watch: {
 			option(newValue, oldValue) {
 				// if(newValue.series){
-					console.log("初始化",newValue)
-					this.initChart(newValue)
+				console.log("初始化", newValue)
+				this.initChart(newValue);
+
+
 				// }
 			}
 		},
 		data() {
 			return {
-				ctx:null
+				ctx: null
 			}
 		},
-		
+
 		mounted() {
 			// Disable prograssive because drawImage doesn't support DOM as parameter
 			// See https://developers.weixin.qq.com/miniprogram/dev/api/canvas/CanvasContext.drawImage.html
@@ -62,7 +63,10 @@
 						option.series.progressive = 0;
 					}
 				}
+
+
 			});
+
 
 		},
 
@@ -83,8 +87,9 @@
 							const canvasWidth = res[0].width
 							const canvasHeight = res[0].height
 							this.ctx = canvasNode.getContext('2d')
-			
+					 
 							const canvas = new WxCanvas(this.ctx, this.canvasId, true, canvasNode)
+							console.log('==ct1==>>>>>', canvas);
 							echarts.setCanvasCreator(() => {
 								return canvas
 							})
@@ -100,6 +105,7 @@
 			getCanvasAttr() {
 				return new Promise((resolve, reject) => {
 					this.ctx = uni.createCanvasContext(this.canvasId, this);
+					console.log('==ctx==>>>>>', this.ctx);
 					var canvas = new WxCanvas(this.ctx, this.canvasId, false);
 					echarts.setCanvasCreator(() => {
 						return canvas;
@@ -126,17 +132,20 @@
 			initChart(option) {
 				this.ctx = uni.createCanvasContext(this.canvasId, this);
 				chartList[this.canvasId] = echarts.init(document.getElementById(this.canvasId));
-				chartList[this.canvasId].setOption(option?option:this.option);
+				chartList[this.canvasId].setOption(option ? option : this.option);
 			},
 			//H5生成图片
 			canvasToTempFilePath(opt) {
 				const base64 = chartList[this.canvasId].getDataURL()
-				opt.success && opt.success({tempFilePath:base64})
+				opt.success && opt.success({
+					tempFilePath: base64
+				})
 			},
 			// #endif
 			// #ifndef H5
 			//绘制图表
 			async initChart(option) {
+				// var myChart = echarts.init(document.getElementById(this.canvasId));
 				// #ifdef MP-WEIXIN || MP-TOUTIAO 
 				const canvasAttr = await this.getCanvasAttr2d();
 				// #endif
@@ -154,17 +163,42 @@
 					height: canvasHeight,
 					devicePixelRatio: canvasDpr // new
 				});
-				canvas.setChart(chartList[this.canvasId]);
-				chartList[this.canvasId].setOption(option?option:this.option);
-			},
+				
+				console.log('==2====>>>>>', chartList[this.canvasId]);
+				// chartList[this.canvasId].on('updateAxisPointer', function(event) {
+				// 	const xAxisInfo = event.axesInfo[0];
+				// 	if (xAxisInfo) {
+				// 		const dimension = xAxisInfo.value + 1;
+				// 		chartList[this.canvasId].setOption({
+				// 			series: {
+				// 				id: 'pie',
+				// 				label: {
+				// 					formatter: '{b}:{d}%)'
+				// 				},
+				// 				encode: {
+				// 					value: dimension,
+				// 					tooltip: dimension
+				// 				}
+				// 			}
+				// 		});
+				// 	}
+				// });
+
+				// console.log('==123====>>>>>', chartList);
+				canvas.setChart(chartList[this.canvasId]); 
+                chartList[this.canvasId].setOption(option ? option : this.option);
+              },
 			//生成图片
 			canvasToTempFilePath(opt) {
 				// #ifdef MP-WEIXIN || MP-TOUTIAO
 				var query = uni.createSelectorQuery()
-				// #ifndef MP-ALIPAY
+					// #ifndef MP-ALIPAY
 					.in(this)
 				// #endif
-				query.select('#' + this.canvasId).fields({ node: true, size: true }).exec(res => {
+				query.select('#' + this.canvasId).fields({
+					node: true,
+					size: true
+				}).exec(res => {
 					const canvasNode = res[0].node
 					opt.canvas = canvasNode
 					uni.canvasToTempFilePath(opt, this)
@@ -180,7 +214,7 @@
 				// #endif
 			},
 			// #endif
-			
+
 			touchStart(e) {
 				if (chartList[this.canvasId] && e.touches.length > 0) {
 					var touch = e.touches[0];

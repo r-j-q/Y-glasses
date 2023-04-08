@@ -7,7 +7,7 @@
 		</view> -->
 		<!-- @click="echartsClick" -->
 		<!-- <echarts onViewClick="echartsClick" :option="option" style="height: 700px;width: 750upx;"></echarts> -->
-	</view>
+	</view> 
 </template>
 
 <script>
@@ -23,9 +23,7 @@
 		watch: {
 			count: function(newVal, oldVal) {
 				this.handleTimeData()
-				// setInterval(()=>{
-				// 	this.handleTimeData()
-				// },300000)
+				 
 			}
 		},
 		data() {
@@ -47,9 +45,13 @@
 
 		mounted() {
 			let _this = this;
-			setTimeout(() => {
+			setTimeout(()=>{
 				_this.handleTimeData()
-			}, 1000)
+			},600)
+			 
+			setInterval(() => {
+				_this.handleTimeData()
+			}, 180000)
 
 			// setInterval(()=>{
 			// 	_this.handleTimeData()
@@ -244,7 +246,7 @@
 					},
 
 					grid: {
-						top: '40%'
+						top: '40%'   
 					},
 					series: [{
 							type: 'line',
@@ -282,27 +284,38 @@
 								focus: 'series'
 							}
 						},
-						// {
-						// 	type: 'pie',
-						// 	id: 'pie',
-						// 	// 修改饼图大小
-						// 	radius: '23%',
-						// 	center: ['50%', '18%'],
-						// 	emphasis: {
-						// 		focus: 'self'
-						// 	},
-						// 	label: {
-						// 		// formatter: '{b}: {@2012} ({d}%)'
-						// 		formatter: '{b}: ({d}%)'
-						// 	},
-						// 	encode: {
-						// 		itemName: 'product',
-						// 		value:source[0][1],
-						// 		tooltip: source[0][1]
-						// 	}
-						// }
+						{
+							type: 'pie',
+							id: 'pie',
+							// 修改饼图大小
+							radius: '23%',
+							center: ['50%', '18%'],
+							emphasis: {
+								focus: 'self'
+							},
+							 
+							label: {
+								// formatter: '{b}: {@2012} ({d}%)'
+								formatter: '{b}:({d}%)'
+							},
+							encode: {
+								itemName: 'product',
+								value:source[0][1],
+								tooltip: source[0][1]
+							}
+						}
 					]
-				}
+				};
+				
+				// myChart.on('mouseover', function(params) {
+				// 	myChart.dispatchAction({
+				// 		type: "highlight",
+				// 		seriesIndex: 4,
+				// 		dataIndex: params.seriesIndex
+				// 	})
+				// })
+				 
+				  // myChart.setOption(this.option);
 
             
              

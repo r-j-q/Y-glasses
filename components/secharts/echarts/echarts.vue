@@ -1,5 +1,6 @@
 <template>
 	<view class="echartsStyle">
+		{{option.id}}
 		<!-- <view class="find-popup" @click="shareModal"> 
 				<view class="find-content">
 					<view class="share-title"><text class="share-title-text">分享至</text></view>
@@ -21,12 +22,12 @@
 					<view class="tui-btn-cancle" @click.stop="closeModal"><text class="tui-btn-cancle-text">取消</text></view>
 				</view>
 			</view> -->
-		<view class="echartsStyle" :id="option.id" :prop="option" :change:prop="echarts.handleUpdate" @click="echarts.handleOnClick"></view>
+		<view class="echartsStyle" :id="option.id" :prop="option" :change:prop="echarts.handleUpdate"
+			@click="echarts.handleOnClick"></view>
 	</view>
 </template>
 
 <script>
-	
 	// data() {
 	// 		return {};
 	// 	},
@@ -56,7 +57,7 @@
 				required: true
 			}
 		},
-		created() { 
+		created() {
 			let t = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 			let len = t.length
 			let id = ''
@@ -65,7 +66,7 @@
 			}
 			this.option.id = id
 		},
-		methods: { 
+		methods: {
 			onViewClick(params) {
 				this.$emit('click', params)
 			}
@@ -75,7 +76,7 @@
 
 <script module="echarts" lang="renderjs">
 	import echarts from '@/components/secharts/echarts/echarts.min.js'
-	
+
 	export default {
 		data() {
 			return {
@@ -86,7 +87,7 @@
 		mounted() {
 			this.handleInit();
 		},
-		methods: { 
+		methods: {
 			handleInit() {
 				this.chart = echarts.init(document.getElementById(this.option.id));
 				// this.chart.on('updateAxisPointer', function (event) {
@@ -97,7 +98,7 @@
 				//       series: {
 				//         id: 'pie',
 				//         label: {
-				          
+
 				//           formatter: '{b}: {@[' + dimension + ']}'
 				//         },
 				//         encode: {
@@ -111,12 +112,42 @@
 				// this.chart.setOption(option);
 				this.handleUpdate(this.option)
 				this.chart.on('click', params => {
-					this.clickData = params
+					this.clickData = params;
+
+
 				})
+
+				// this.chart.on('mouseover', function(params) {
+				// 	this.chart.dispatchAction({
+				// 		type: "highlight",
+				// 		seriesIndex: 4,
+				// 		dataIndex: params.seriesIndex
+				// 	})
+				// })
+
+				// this.chart.on('updateAxisPointer', function (event) {
+				//   const xAxisInfo = event.axesInfo[0];
+				//   if (xAxisInfo) {
+				//     const dimension = xAxisInfo.value + 1;
+				//     this.chart.setOption({
+				//       series: {
+				//         id: 'pie',
+				//         label: {
+
+				//           formatter: '{b}: {@[' + dimension + ']}'
+				//         },
+				//         encode: {
+				//           value: dimension,
+				//           tooltip: dimension
+				//         }
+				//       }
+				//     });
+				//   }
+				// });
 			},
-		 
+
 			handleOnClick(event, instance) {
-				console.log('==this.event=====>',event)
+				console.log('==this.event=====>', event)
 				// console.log('==this.instance=====>',event)
 				if (this.clickData) {
 					instance.callMethod('onViewClick', {
@@ -126,7 +157,7 @@
 					})
 					this.clickData = null
 				}
-			}, 
+			},
 			handleUpdate(option) {
 				if (this.chart) {
 					if (option) {
@@ -135,93 +166,121 @@
 								option.tooltip.position = this.handleTooltipPosition()
 							}
 							if (option.tooltip.formatterStatus) {
-								option.tooltip.formatter = this.handleTooltipFormatter(option.tooltip.formatterUnit, option.tooltip.handleFormatFloat2, option.tooltip.hangleFormatThousands)
+								option.tooltip.formatter = this.handleTooltipFormatter(option.tooltip.formatterUnit, option
+									.tooltip.handleFormatFloat2, option.tooltip.hangleFormatThousands)
 							}
 						}
 					}
-					this.chart.setOption(option, option.notMerge)
-				}
-			}, 
-			handleTooltipPosition() {
-				return (point, params, dom, rect, size) => {
-					let x = point[0]
-					let y = point[1]
-					let viewWidth = size.viewSize[0]
-					let viewHeight = size.viewSize[1]
-					let boxWidth = size.contentSize[0]
-					let boxHeight = size.contentSize[1]
-					let posX = 0  
-					let posY = 0  
-					if (x >= boxWidth) {  
-						posX = x - boxWidth - 1
-					}
-					if (y >= boxHeight) {  
-						posY = y - boxHeight - 1
-					}
-					return [posX, posY]
-				}
-			}, 
-			handleTooltipFormatter(unit, handleFormatFloat2, hangleFormatThousands) {
-				return params => {
-					let resultStr = ''
-					unit = unit ? unit : ''
-					for (let i in params) {
-						if (i == 0) {
-							resultStr += params[i].axisValueLabel
-						}
-						let valueStr = '--'
-						if (params[i].data !== null) {
-							valueStr = params[i].data
-							if (handleFormatFloat2) {
-								valueStr = this.handleFormatFloat2(valueStr)
-							}
-							if (hangleFormatThousands) {
-								valueStr = this.hangleFormatThousands(valueStr)
-							}
-						}
-						// #ifdef H5
-						resultStr += '\n' + params[i].seriesName + '：' + valueStr + ' ' + unit
-						// #endif
-						
-						// #ifdef APP-PLUS
-						resultStr += '<br/>' + params[i].marker + params[i].seriesName + '：' + valueStr + ' ' + unit
-						// #endif
-					}
-					return resultStr
-				}
-			},
-			/**
-			 * 保留两位小数
-			 * @param {Object} value
-			 */
-			handleFormatFloat2(v) {
-				let tempNumber = Math.round(parseFloat(v) * 100) / 100
-				let xsdStr = tempNumber.toString().split('.')
-				if (xsdStr.length === 1) {
-					tempNumber = (isNaN(tempNumber) ? '0' : tempNumber.toString()) + '.00'
-					return tempNumber
-				}
-				if (xsdStr.length > 1) {
-					if (xsdStr[1].length < 2) {
-						tempNumber = tempNumber.toString() + '0'
-					}
-					return tempNumber
-				}
-			}, 
-			hangleFormatThousands(value) {
-				if (value === undefined || value === null) {
-					value = ''
-				}
-				if (!isNaN(value)) {
-					value = value + ''
-				}
-				let re = /\d{1,3}(?=(\d{3})+$)/g
-				let n1 = value.replace(/^(\d+)((\.\d+)?)$/, function(s, s1, s2) {
-					return s1.replace(re, '$&,') + s2
+					this.chart.dispatchAction({
+						type: "highlight",
+						seriesIndex: 4,
+						dataIndex: params.seriesIndex
+					})
 				})
-				return n1
-			}
+
+			this.chart.on('updateAxisPointer', function(event) {
+				const xAxisInfo = event.axesInfo[0];
+				if (xAxisInfo) {
+					const dimension = xAxisInfo.value + 1;
+					this.chart.setOption({
+						series: {
+							id: 'pie',
+							label: {
+
+								formatter: '{b}: {@[' + dimension + ']}'
+							},
+							encode: {
+								value: dimension,
+								tooltip: dimension
+							}
+						}
+					});
+				}
+			});
+
+			this.chart.setOption(option, option.notMerge)
 		}
+	},
+	handleTooltipPosition() {
+			return (point, params, dom, rect, size) => {
+				let x = point[0]
+				let y = point[1]
+				let viewWidth = size.viewSize[0]
+				let viewHeight = size.viewSize[1]
+				let boxWidth = size.contentSize[0]
+				let boxHeight = size.contentSize[1]
+				let posX = 0
+				let posY = 0
+				if (x >= boxWidth) {
+					posX = x - boxWidth - 1
+				}
+				if (y >= boxHeight) {
+					posY = y - boxHeight - 1
+				}
+				return [posX, posY]
+			}
+		},
+		handleTooltipFormatter(unit, handleFormatFloat2, hangleFormatThousands) {
+			return params => {
+				let resultStr = ''
+				unit = unit ? unit : ''
+				for (let i in params) {
+					if (i == 0) {
+						resultStr += params[i].axisValueLabel
+					}
+					let valueStr = '--'
+					if (params[i].data !== null) {
+						valueStr = params[i].data
+						if (handleFormatFloat2) {
+							valueStr = this.handleFormatFloat2(valueStr)
+						}
+						if (hangleFormatThousands) {
+							valueStr = this.hangleFormatThousands(valueStr)
+						}
+					}
+					// #ifdef H5
+					resultStr += '\n' + params[i].seriesName + '：' + valueStr + ' ' + unit
+					// #endif
+
+					// #ifdef APP-PLUS
+					resultStr += '<br/>' + params[i].marker + params[i].seriesName + '：' + valueStr + ' ' + unit
+					// #endif
+				}
+				return resultStr
+			}
+		},
+		/**
+		 * 保留两位小数
+		 * @param {Object} value
+		 */
+		handleFormatFloat2(v) {
+			let tempNumber = Math.round(parseFloat(v) * 100) / 100
+			let xsdStr = tempNumber.toString().split('.')
+			if (xsdStr.length === 1) {
+				tempNumber = (isNaN(tempNumber) ? '0' : tempNumber.toString()) + '.00'
+				return tempNumber
+			}
+			if (xsdStr.length > 1) {
+				if (xsdStr[1].length < 2) {
+					tempNumber = tempNumber.toString() + '0'
+				}
+				return tempNumber
+			}
+		},
+		hangleFormatThousands(value) {
+			if (value === undefined || value === null) {
+				value = ''
+			}
+			if (!isNaN(value)) {
+				value = value + ''
+			}
+			let re = /\d{1,3}(?=(\d{3})+$)/g
+			let n1 = value.replace(/^(\d+)((\.\d+)?)$/, function(s, s1, s2) {
+				return s1.replace(re, '$&,') + s2
+			})
+			return n1
+		}
+	}
 	}
 </script>
 
@@ -230,6 +289,7 @@
 		width: 100%;
 		height: 550px;
 	}
+
 	/*
 	.cstIconfontN {
 		text-align: center;
@@ -337,6 +397,3 @@
 		padding-bottom: 5rpx;
 	}*/
 </style>
-
- 
- 

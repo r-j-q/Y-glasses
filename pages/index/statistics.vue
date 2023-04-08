@@ -156,7 +156,7 @@
 			return {
 				  
 				  
-				count: 1,
+				count: 0,
 				listYong: [{
 						name: "日数据",
 						id: 1
@@ -271,7 +271,11 @@
 			// _this.handleTimeData(1)
             setInterval(()=>{
 				_this.notifyMy()
-			},300000)
+			},180000)
+			 
+			// setInterval(()=>{
+				_this.count=1
+			// },180000)
 		},
 		onShow() {
 			// uni.getSystemInfo({
@@ -873,6 +877,7 @@
 			// 内容切换
 			tion(res) {
 				this.count = res;
+				 
 
 				this.chartData = {};
 				this.aswitch = res;

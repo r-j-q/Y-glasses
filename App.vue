@@ -16,8 +16,8 @@
 	} 
 </script>
 
-<style lang="scss">
+<style lang="scss">  
 	//支付组件  https://gitcode.net/dcloud/uni-pay/-/blob/master/pages/index/index.vue 
-	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
+	/* 注意要写在第一行，同时给style标签加入lang="scss"属性  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   */
 	@import "@/uview-ui/index.scss";
 </style>

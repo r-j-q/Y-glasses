@@ -164,9 +164,9 @@
 		onShow(){
 			this.obtain();
 		},
-		onHide(){
-			clearInterval(this.interval);
-		},
+		// onHide(){
+		// 	clearInterval(this.interval);
+		// },
 		onUnload(){
 			clearInterval(this.interval);
 		},

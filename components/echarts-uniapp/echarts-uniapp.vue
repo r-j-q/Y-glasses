@@ -1,6 +1,6 @@
 <template>
 	<!-- #ifdef MP-WEIXIN || MP-TOUTIAO -->
-	<canvas type="2d" class="echarts" :canvas-id="canvasId" :id="canvasId" @touchstart="touchStart"
+	<canvas type="2d" class="echarts" ref="echarts2d" :canvas-id="canvasId" :id="canvasId" @touchstart="touchStart"
 		@touchmove="touchMove" @touchend="touchEnd" />
 	<!-- #endif -->
 	<!-- #ifndef MP-WEIXIN || MP-TOUTIAO -->
@@ -87,7 +87,7 @@
 							const canvasWidth = res[0].width
 							const canvasHeight = res[0].height
 							this.ctx = canvasNode.getContext('2d')
-					 
+
 							const canvas = new WxCanvas(this.ctx, this.canvasId, true, canvasNode)
 							console.log('==ct1==>>>>>', canvas);
 							echarts.setCanvasCreator(() => {
@@ -145,7 +145,7 @@
 			// #ifndef H5
 			//绘制图表
 			async initChart(option) {
-				// var myChart = echarts.init(document.getElementById(this.canvasId));
+				// let myChart = echarts.init(this.$refs['echarts2d']);
 				// #ifdef MP-WEIXIN || MP-TOUTIAO 
 				const canvasAttr = await this.getCanvasAttr2d();
 				// #endif
@@ -163,31 +163,38 @@
 					height: canvasHeight,
 					devicePixelRatio: canvasDpr // new
 				});
-				
+			let myChart=	echarts.init(canvas, null, {
+					width: canvasWidth,
+					height: canvasHeight,
+					devicePixelRatio: canvasDpr // new
+				});
+
 				console.log('==2====>>>>>', chartList[this.canvasId]);
-				// chartList[this.canvasId].on('updateAxisPointer', function(event) {
-				// 	const xAxisInfo = event.axesInfo[0];
-				// 	if (xAxisInfo) {
-				// 		const dimension = xAxisInfo.value + 1;
-				// 		chartList[this.canvasId].setOption({
-				// 			series: {
-				// 				id: 'pie',
-				// 				label: {
-				// 					formatter: '{b}:{d}%)'
-				// 				},
-				// 				encode: {
-				// 					value: dimension,
-				// 					tooltip: dimension
-				// 				}
-				// 			}
-				// 		});
-				// 	}
-				// });
+				 
 
 				// console.log('==123====>>>>>', chartList);
-				canvas.setChart(chartList[this.canvasId]); 
-                chartList[this.canvasId].setOption(option ? option : this.option);
-              },
+				canvas.setChart(chartList[this.canvasId]);
+			 myChart.on('updateAxisPointer', function(event) {
+			 	const xAxisInfo = event.axesInfo[0];
+			 	if (xAxisInfo) {
+			 		const dimension = xAxisInfo.value + 1;
+			 		myChart.setOption({
+			 			series: {
+			 				id: 'pie',
+			 				label: {
+			 					formatter: '{b}:  {d}%'
+			 				},
+			 				encode: {
+			 					value: dimension,
+			 					tooltip: dimension
+			 				}
+			 			}
+			 		});
+			 	}
+			 }); 
+				chartList[this.canvasId].setOption(option ? option : this.option);
+				 
+			},
 			//生成图片
 			canvasToTempFilePath(opt) {
 				// #ifdef MP-WEIXIN || MP-TOUTIAO

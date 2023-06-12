@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/bertSuggest/index",
     "pages/lanya/blebinding",
     "pages/index/statistics",
     "pages/index/binding",

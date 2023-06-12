@@ -71,7 +71,17 @@
 				<view>申请获取以下权限</view>
 				<text>获得你的公开信息(昵称，头像、地区等)</text>
 			</view>
-			<button class="bottom" type="primary" withCredentials="true" @tap="getUserProfile">授权登录</button>
+		<!-- 	<button type="balanced" open-type="chooseAvatar" @chooseavatar="onChooseavatar">
+				<image :src="avatarUrl" class="refreshIcon" style="margin-top: 30rpx; width:500rpx;height:500rpx;">
+				</image>
+			</button>
+
+			<view class="nickname" style="display: flex;flex-direction: row;margin-top: 20rpx;">
+				<text class="weui-text">昵称：{{ visible ?'999':'88888'}}</text>
+				<input type="nickname" class="weui-input" :value="nickName" @blur="bindblur" placeholder="请输入昵称"
+					@input="bindinput" />
+			</view> -->
+			<button class="bottom" type="primary" @click="getUserProfile2">授权登录</button>
 			<!-- <button type="primary" class='btn' open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">使用手机号登录</button> -->
 		</view>
 	</view>
@@ -87,10 +97,27 @@
 				encryptedData: '',
 				iv: '',
 				visible: false,
+				avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+				nickName: ''
 			}
 		},
 		onLoad() {},
 		methods: {
+			//昵称输入框blur
+			bindblur(e) {
+				console.log('nickName', e)
+				this.nickName = e.detail.value;
+			},
+			//昵称输入框input
+			bindinput(e) {
+				console.log('nickName', e)
+				this.nickName = e.detail.value;
+			},
+			//选择头像
+			onChooseavatar(e) {
+				console.log(e.detail);
+				this.avatarUrl = e.detail.avatarUrl;
+			},
 			getPhoneNumber(e) {
 				console.log(e, e.detail.errMsg, "methods-微信认证e");
 				if (e.detail.errMsg == "getPhoneNumber:ok") {
@@ -150,10 +177,69 @@
 					console.log(res, "sigin-login-res");
 				})
 			},
+			async getUserProfile() {
+				let _this = this
 
-			getUserProfile() {
+				//这里取到的是用户的信息，自己安排自己的业务
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						// console.log(_this.avatarUrl, "用户信息");
+						// console.log(_this.nickName, "用户信息");
+						// console.log(res.code, "用户信息Code");
+						 
+						var arr = [{
+							"avatarUrl": _this.avatarUrl,
+							"nickName": _this.nickName,
+							"gender": "男"
+						}];
+						var drr = JSON.stringify(arr);
+
+                       _this.login_code(res.code,drr)
+						 
+						// this.$http.request({
+						// 	url: 'authorization',
+						// 	method: 'POST',
+						// 	header: {
+						// 		'Content-Type': 'applicktion/json',
+						// 	},
+						// 	data: {
+						// 				code: res.code,
+						// 				userInfo: drr,
+						// 			},
+						// }).then(res => {
+						// 	console.log("res----------->resresresresresresres",res  );
+						// 	_this.visible = true
+
+						// })
+
+						//这里获取的是用户的code，用来换取 openid、unionid、session_key 等信息，再将信息丢给后台自己的登录业务就行了
+					}
+				})
+
+			},
+			login_code (v,drr){
+				let _this=this;
+				 console.log(  "--------1-------");
+				uni.request({
+					url: 'https://bmj.shningmi.com/authorization',  
+					data: {
+						code: v,
+						userInfo: drr,
+					},
+					method: 'POST',
+					header: {
+						'Content-Type': 'applicktion/json',
+					},
+					success: (res) => {
+						console.log(  "--------2-------");
+						_this.visible = true
+					}
+				});
+			},
+			getUserProfile2() {
 				uni.getUserProfile({
-					desc: '登录',
+					desc: '用于完善用户资料',
 					success: (info) => {
 						console.log(info)
 						//这里取到的是用户的信息，自己安排自己的业务
@@ -186,7 +272,7 @@
 									data: data,
 								}).then(login => {
 									this.visible = true
-									console.log(login, "login------");
+									console.log(login, "login------", login);
 								})
 
 								//这里获取的是用户的code，用来换取 openid、unionid、session_key 等信息，再将信息丢给后台自己的登录业务就行了
@@ -232,6 +318,6 @@
 	.bottom {
 		border-radius: 80rpx;
 		margin: 70rpx 50rpx;
-		font-size: 35rpx;
+		font-size: 35rpx; 
 	}
 </style>

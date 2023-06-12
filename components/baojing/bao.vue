@@ -1,0 +1,103 @@
+<template>
+  <view>
+		<view class="container">
+			<view class="dot" :style="{backgroundImage:'url('+ bgc +')'}"></view>
+			<view class="pulse"></view>
+			<view class="pulse-big"></view>
+		</view>
+
+	</view>
+
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				bgc: require('@/static/index/01.gif')
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.container {
+		/* position: relative;
+		left: 50%;
+		top: 20px; */
+		/* margin-left: -160px; */
+		width: 100px;
+		height: 100px;
+	}
+
+	.dot {
+		position: absolute;
+		width: 96px;
+		height: 96px;
+		left: 160px;
+		top: 160px;
+		/* background: url(/static/index/01.gif) no-repeat; */
+		background-size: 100%;
+		z-index: 200;
+	}
+
+	.pulse {
+		background: rgba(239, 45, 2, 0.6) !important;
+		-webkit-animation: warn 0.9s ease-out;
+		-moz-animation: warn 0.9s ease-out;
+		animation: warn 0.9s ease-out;
+		-webkit-animation-iteration-count: infinite;
+		-moz-animation-iteration-count: infinite;
+		animation-iteration-count: infinite;
+		box-shadow: 1px 1px 30px #EF2D02;
+	}
+
+	.pulse,
+	.pulse-big {
+		position: absolute;
+		width: 420px;
+		height: 420px;
+		border: 2px solid #EF2D02;
+		background: rgba(239, 45, 2, 0.8);
+		border-radius: 50%;
+		z-index: 100;
+		opacity: 0;
+	}
+
+	.pulse-big {
+		background: rgba(239, 45, 2, 0.6) !important;
+		-webkit-animation: warn1 0.9s ease-out;
+		-moz-animation: warn1 0.9s ease-out;
+		animation: warn1 0.9s ease-out;
+		-webkit-animation-iteration-count: infinite;
+		-moz-animation-iteration-count: infinite;
+		animation-iteration-count: infinite;
+		box-shadow: 1px 1px 30px #EF2D02;
+	}
+
+	.pulse,
+	.pulse-big {
+		position: absolute;
+		width: 420px;
+		height: 420px;
+		border: 2px solid #EF2D02;
+		background: rgba(239, 45, 2, 0.8);
+		border-radius: 50%;
+		z-index: 100;
+		opacity: 0;
+	}
+
+	@keyframes warn1 {
+		0% {
+			-o-transform: scale(0);
+			transform: scale(0);
+			opacity: 1;
+		}
+
+		100% {
+			-o-transform: scale(0.6);
+			transform: scale(0.6);
+			opacity: 0;
+		}
+	}
+</style>

@@ -11,6 +11,7 @@
     "minified": true,
     "newFeature": true,
     "bigPackageSizeSupport": true,
+    "condition": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],

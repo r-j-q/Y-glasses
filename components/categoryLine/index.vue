@@ -98,7 +98,7 @@
 						res.data.data.bad_posture_data.bad_posture_times_hour.unshift('错误坐姿');
 						res.data.data.nearwork_data.nearwork_hour.unshift('近距离用眼');
 						res.data.data.lux_data.lux_hour.unshift('光照强弱');
-						res.data.data.out_time_data.out_time_hour.unshift('户外时间');
+						res.data.data.out_time_data.out_time_hour.unshift('户外光照');
 						source = [
 							_this.x_day_list,
 							[...res.data.data.bad_posture_data.bad_posture_times_hour],
@@ -111,7 +111,7 @@
 						res.data.data.bad_posture_times_array.unshift('错误坐姿'),
 							res.data.data.nearwork_day_array.unshift('近距离用眼'),
 							res.data.data.lux_day_array.unshift('光照强弱'),
-							res.data.data.out_time_array.unshift('户外时间')
+							res.data.data.out_time_array.unshift('户外光照')
 						source = [
 							_this.x_week_list,
 							[...res.data.data.bad_posture_times_array],
@@ -126,13 +126,13 @@
 							res.data.data.bad_posture_times_array.unshift('错误坐姿'),
 							res.data.data.nearwork_day_array.unshift('近距离用眼'),
 							res.data.data.lux_day_array.unshift('光照强弱'),
-							res.data.data.out_time_lux_array.unshift('户外时间')
+							res.data.data.out_time_array.unshift('户外光照')
 						source = [
 							[...res.data.data.time_array],
 							[...res.data.data.bad_posture_times_array],
 							[...res.data.data.nearwork_day_array],
 							[...res.data.data.lux_day_array],
-							[...res.data.data.out_time_lux_array]
+							[...res.data.data.out_time_array]
 						]
 					}
 					// 日
@@ -185,8 +185,8 @@
 							fontFamily: 'Verdana,sans-serif',
 
 						},
-						formatter(params) {
-							let val = '';
+						formatter(params) { 
+							let val = ''; 
 
 							for (var x in params) {
 								console.log('======>', params)
@@ -194,7 +194,7 @@
 								val += "错误坐姿:" + params[x].value[1] + "\n"
 								val += "近距离用眼:" + params[x].value[2] + "\n"
 								val += "光照强弱:" + params[x].value[3] + "\n"
-								val += "户外时间:" + params[x].value[4] + "\n"
+								val += "户外关照:" + params[x].value[4] + "\n"
 
 								return val
 							}

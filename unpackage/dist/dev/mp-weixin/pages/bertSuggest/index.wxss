@@ -1,0 +1,24 @@
+
+.stylecss.data-v-51348099 {
+	width: 90%;
+	margin: 0 auto;
+	min-height: 600rpx;
+	/* margin-top: 100upx; */
+}
+.m_b_20.data-v-51348099 {
+	padding: 20rpx 0;
+}
+.btu.data-v-51348099 {
+	width: 80%;
+	height: 80rpx;
+	line-height: 80rpx;
+
+	color: #fff;
+	margin: 0 auto;
+	margin-top: 100rpx;
+	background-color: cornflowerblue;
+}
+.fankui.data-v-51348099 {
+	padding: 20rpx;
+}
+

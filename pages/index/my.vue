@@ -25,6 +25,15 @@
 				<view class="right"></view>
 			</view>
 		</view>
+		<view class="list-wrap" @click="jump('/pages/bertSuggest/index')">
+			<view class="list">
+				<view class="left">
+					<image src="../../static/index/13.png" mode="aspectFill"></image>
+					<view>意见反馈</view>
+				</view>
+				<view class="right"></view>
+			</view>
+		</view>
 		
 		<view class="list-wrap martop">
 			<view class="list">
